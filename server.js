@@ -36,6 +36,10 @@ app.route('/users/:id')
   const user_id = req.params.id
   const user = await User.findById(user_id)
 
+  if (!user) {
+    return res.sendStatus(404)
+  }
+
   return res.json(view(user))
 }))
 // UPDATE
