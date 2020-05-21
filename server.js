@@ -32,16 +32,27 @@ app.post('/users', asyncHandler(async (req, res) => {
 app.route('/users/:id')
 // READ
 .get(asyncHandler(async (req, res) => {
+  const view = user => λ.pick(user, ['id', 'email', 'name'])
   const user_id = req.params.id
   const user = await User.findById(user_id)
-  const user_view = λ.pick(user, ['id', 'email', 'name'])
 
-  return res.json(user_view)
+  return res.json(view(user))
 }))
 // UPDATE
-.put((req, res) => {
-  // User.findByIdAndUpdate()
-})
+.put(asyncHandler(async (req, res) => {
+  const view = user => λ.pick(user, ['id', 'email', 'name'])
+
+  const userParams = () =>
+    λ.pick(req.body, ['name', 'email', 'password'])
+
+  const user_id = req.params.id
+
+  const user = await User.findByIdAndUpdate(
+    user_id, userParams(), { new: true }
+  )
+
+  return res.json(view(user))
+}))
 // DELETE
 .delete((req, res) => {
   // User.findByIdAndDelete()
