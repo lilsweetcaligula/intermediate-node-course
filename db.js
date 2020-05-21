@@ -12,7 +12,13 @@ exports.connect = async () => {
   const port = process.env.MONGO_PORT
 
   const conn_url = `mongodb://${user}:${password}@${host}:${port}`
-  const conn_opts = { useNewUrlParser: true, useUnifiedTopology: true }
+
+  const conn_opts = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false
+  }
 
   return Mongoose.connect(conn_url, conn_opts)
 }
+
