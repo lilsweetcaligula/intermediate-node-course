@@ -17,7 +17,7 @@ services:
 
   mongo:
     image: mongo:4.2
-    restart: always
+    restart: "unless-stopped"
     working_dir: /var/mongo
     volumes: 
       - ./db:/var/db/mongo
@@ -27,5 +27,5 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: "${MONGO_USER}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGO_PASSWORD}"
-      MONGO_INITDB_DATABASE: mongo
+      MONGO_INITDB_DATABASE: appdata
 
