@@ -54,9 +54,13 @@ app.route('/users/:id')
   return res.json(view(user))
 }))
 // DELETE
-.delete((req, res) => {
-  // User.findByIdAndDelete()
-})
+.delete(asyncHandler(async (req, res) => {
+  const user_id = req.params.id
+
+  await User.findByIdAndDelete(user_id)
+
+  return res.sendStatus(204)
+}))
 
 
 const port = process.env.SERVER_PORT || 8000
